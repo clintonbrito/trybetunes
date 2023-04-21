@@ -27,7 +27,7 @@ export default class Login extends Component {
 
   render() {
     const { name, isLoginButtonDisabled } = this.state;
-    const { onLoginButtonClick, isLoading } = this.props;
+    const { onLoginClick, isLoading } = this.props;
     return (
       <div data-testid="page-login">
         {isLoading ? (<Loading />)
@@ -47,7 +47,7 @@ export default class Login extends Component {
               <button
                 data-testid="login-submit-button"
                 disabled={ isLoginButtonDisabled }
-                onClick={ () => onLoginButtonClick(name) }
+                onClick={ () => onLoginClick(name) }
               >
                 Entrar
               </button>

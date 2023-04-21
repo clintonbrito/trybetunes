@@ -15,7 +15,7 @@ class App extends React.Component {
     isLoaded: false,
   };
 
-  onLoginButtonClick = async (name) => {
+  onLoginClick = async (name) => {
     this.setState({
       isLoading: true,
     });
@@ -37,10 +37,7 @@ class App extends React.Component {
             <Route exact path="/" component={ Login }>
               {isLoaded
                 ? (<Redirect to="/search" />)
-                : <Login
-                  isLoading={ isLoading }
-                  onLoginButtonClick={ this.onLoginButtonClick }
-                />}
+                : <Login isLoading={ isLoading } onLoginClick={ this.onLoginClick } />}
             </Route>
             <Route exact path="/search" component={ Search } />
             <Route exact path="/album/:id" component={ Album } />
