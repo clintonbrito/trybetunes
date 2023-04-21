@@ -38,9 +38,9 @@ class App extends React.Component {
               {isLoaded
                 ? (<Redirect to="/search" />)
                 : <Login
-                    isLoading={ isLoading }
-                    onLoginButtonClick={ this.onLoginButtonClick }
-                  />}
+                  isLoading={ isLoading }
+                  onLoginButtonClick={ this.onLoginButtonClick }
+                />}
             </Route>
             <Route exact path="/search" component={ Search } />
             <Route exact path="/album/:id" component={ Album } />
