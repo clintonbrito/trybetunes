@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom/cjs/react-router-dom.min';
+import { Link, Redirect, Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
 import Search from './pages/Search';
 import Album from './pages/Album';
@@ -31,8 +31,8 @@ class App extends React.Component {
 
     return (
       <div>
-        <h1>TrybeTunes 🎵</h1>
         <main>
+          <Link to="/search"><h1>TrybeTunes 🎵</h1></Link>
           <Switch>
             <Route exact path="/" component={ Login }>
               {isLoaded
