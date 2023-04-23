@@ -25,16 +25,17 @@ export default class Header extends Component {
     const { name, isLoading } = this.state;
     return (
       <header data-testid="header-component" className="header">
+        <Link to="/search"><h1>TrybeTunes 🎵</h1></Link>
         { isLoading ? <Loading /> : <div data-testid="header-user-name">{name}</div> }
         <div>
           <Link to="/search">
-            <div data-testid="link-to-search">Pesquisa</div>
+            <div data-testid="link-to-search">Search</div>
           </Link>
           <Link to="/favorites">
-            <div data-testid="link-to-favorites">Favoritos</div>
+            <div data-testid="link-to-favorites">Favorites</div>
           </Link>
           <Link to="/profile">
-            <div data-testid="link-to-profile">Perfil</div>
+            <div data-testid="link-to-profile">Profile</div>
           </Link>
         </div>
       </header>
