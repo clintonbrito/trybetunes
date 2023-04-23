@@ -8,17 +8,14 @@ import Profile from './pages/Profile';
 import ProfileEdit from './pages/ProfileEdit';
 import NotFound from './pages/NotFound';
 import Favorites from './pages/Favorites';
-import searchAlbumsAPI from './services/searchAlbumsAPI';
 
 export default class Routes extends Component {
   state = {
     isLoading: false,
     isLoaded: false,
-    albums: [],
   };
 
   onLoginClick = async (name) => {
-    const { searchInput } = this.state;
     this.setState({
       isLoading: true,
     });
@@ -26,12 +23,6 @@ export default class Routes extends Component {
     this.setState({
       isLoading: false,
       isLoaded: true,
-    });
-
-    const fetchAlbum = await searchAlbumsAPI(searchInput);
-    const result = fetchAlbum.json();
-    this.setState({
-      albums: result,
     });
   };
 
