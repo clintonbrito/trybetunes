@@ -30,8 +30,8 @@ export default class Search extends Component {
     // console.log([name], value);
   };
 
-  onSearchClick = async (event) => {
-    event.preventDefault();
+  onSearchClick = async () => {
+    // event.preventDefault();
     const { search } = this.state;
     const fetchAlbum = await searchAlbumsAPI(search);
     // const result = await fetchAlbum.json();
