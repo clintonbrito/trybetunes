@@ -6,7 +6,7 @@ export default class Album extends Component {
     return (
       <div data-testid="page-album">
         <Header />
-        <h1>Album</h1>
+        <h1>Olá Album</h1>
       </div>
     );
   }

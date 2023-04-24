@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import Header from '../components/Header';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
+import Loading from '../components/Loading';
+import AlbumSearched from '../components/AlbumSearched';
+import AlbumNotFound from '../components/AlbumNotFound';
 
 export default class Search extends Component {
   state = {
     isSearchButtonDisabled: true,
     search: [],
+    searchInput: '',
+    isLoading: false,
+    isLoaded: false,
+    artistName: '',
   };
-
-  componentDidMount() {
-    this.onSearchClick();
-  }
 
   validationFields = (characters) => {
     const minCharacters = 2;
@@ -25,25 +28,42 @@ export default class Search extends Component {
     const { name, value } = target;
     this.setState({
       [name]: value,
-      // search: target.value,
     }, () => this.validationFields(value));
-    // console.log([name], value);
   };
 
-  onSearchClick = async () => {
-    // event.preventDefault();
-    const { search } = this.state;
-    const fetchAlbum = await searchAlbumsAPI(search);
-    // const result = await fetchAlbum.json();
-    console.log(await fetchAlbum);
+  onSearchClick = async (event) => {
+    event.preventDefault();
+
     this.setState({
-      search: fetchAlbum,
+      isLoading: true,
+    });
+
+    const { searchInput } = this.state;
+    const result = await searchAlbumsAPI(searchInput);
+    this.setState({
+      search: result,
+      isLoading: false,
+      isLoaded: true,
+      searchInput: '',
+      artistName: searchInput,
     });
   };
 
   render() {
-    const { isSearchButtonDisabled, name } = this.state;
-    return (
+    const { isSearchButtonDisabled,
+      searchInput,
+      search,
+      isLoading,
+      isLoaded,
+      // artistName,
+      // collectionId,
+      // collectionName,
+      // collectionPrice,
+      // artworkUrl100,
+      artistName,
+    } = this.state;
+
+    return isLoading ? <Loading /> : (
       <div data-testid="page-search">
         <Header />
         <h1>Pesquise no Billify 🎼</h1>
@@ -54,7 +74,7 @@ export default class Search extends Component {
             data-testid="search-artist-input"
             placeholder="Nome do artista"
             onChange={ this.handleChange }
-            value={ name }
+            value={ searchInput }
           />
           <button
             data-testid="search-artist-button"
@@ -62,9 +82,29 @@ export default class Search extends Component {
             onClick={ this.onSearchClick }
             type="submit"
           >
-            Entrar
+            Pesquisar
           </button>
         </form>
+        <section>
+          { search.length === 0 && <AlbumNotFound /> }
+          { isLoaded
+            && (
+              <div>
+                <p>{`Resultado de álbuns de: ${artistName}`}</p>
+                {
+                  search.map((album) => (
+                    <AlbumSearched
+                      key={ album.collectionId }
+                      artistName={ album.artistName }
+                      collectionId={ album.collectionId }
+                      collectionName={ album.collectionName }
+                      collectionPrice={ album.collectionPrice }
+                      artworkUrl100={ album.artworkUrl100 }
+                    />))
+                }
+              </div>
+            )}
+        </section>
       </div>
     );
   }
