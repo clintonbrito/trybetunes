@@ -26,9 +26,12 @@ export default class Search extends Component {
 
   handleChange = ({ target }) => {
     const { name, value } = target;
-    this.setState({
-      [name]: value,
-    }, () => this.validationFields(value));
+    this.setState(
+      {
+        [name]: value,
+      },
+      () => this.validationFields(value),
+    );
   };
 
   onSearchClick = async (event) => {
@@ -50,7 +53,8 @@ export default class Search extends Component {
   };
 
   render() {
-    const { isSearchButtonDisabled,
+    const {
+      isSearchButtonDisabled,
       searchInput,
       search,
       isLoading,
@@ -63,7 +67,9 @@ export default class Search extends Component {
       artistName,
     } = this.state;
 
-    return isLoading ? <Loading /> : (
+    return isLoading ? (
+      <Loading />
+    ) : (
       <div data-testid="page-search">
         <Header />
         <h1>Pesquise no Billify 🎼</h1>
@@ -86,26 +92,44 @@ export default class Search extends Component {
           </button>
         </form>
         <section>
-          { search.length === 0 && <AlbumNotFound /> }
-          { isLoaded
-            && (
+          {/* { search.length === 0 && <AlbumNotFound /> } */}
+          {isLoaded
+            && (search.length === 0 ? (
+              <AlbumNotFound />
+            ) : (
               <div>
                 <p>{`Resultado de álbuns de: ${artistName}`}</p>
-                {
-                  search.map((album) => (
-                    <AlbumSearched
-                      key={ album.collectionId }
-                      artistName={ album.artistName }
-                      collectionId={ album.collectionId }
-                      collectionName={ album.collectionName }
-                      collectionPrice={ album.collectionPrice }
-                      artworkUrl100={ album.artworkUrl100 }
-                    />))
-                }
+                {search.map((album) => (
+                  <AlbumSearched
+                    key={ album.collectionId }
+                    artistName={ album.artistName }
+                    collectionId={ album.collectionId }
+                    collectionName={ album.collectionName }
+                    collectionPrice={ album.collectionPrice }
+                    artworkUrl100={ album.artworkUrl100 }
+                  />
+                ))}
               </div>
-            )}
+            ))}
         </section>
       </div>
     );
   }
 }
+
+// {
+//   /* <div>
+// <p>{`Resultado de álbuns de: ${artistName}`}</p>
+// {
+//   search.map((album) => (
+//     <AlbumSearched
+//       key={ album.collectionId }
+//       artistName={ album.artistName }
+//       collectionId={ album.collectionId }
+//       collectionName={ album.collectionName }
+//       collectionPrice={ album.collectionPrice }
+//       artworkUrl100={ album.artworkUrl100 }
+//     />))
+// }
+// </div> */
+// }
